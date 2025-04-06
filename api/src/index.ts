@@ -5,8 +5,8 @@ import mongoose from "mongoose" ;
 import session  from "express-session";
 import passport from "passport";
 import bodyParser from"body-parser";
+import { router as blogRouter } from "./blog/index";
 
-// import keys = from("./config/keys");
 dotenv.config()
 
 
@@ -29,6 +29,8 @@ app.use(
 
   app.use(passport.initialize());
 app.use(passport.session());
+
+app.use("/Products", blogRouter);
 
 app.get("/",(req,res,next)=>{
     res.send("api is okay")
