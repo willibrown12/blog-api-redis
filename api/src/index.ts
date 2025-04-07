@@ -6,6 +6,7 @@ import session  from "express-session";
 import passport from "passport";
 import bodyParser from"body-parser";
 import { router as blogRouter } from "./blog/index";
+import errorHandler from "./middleWere/error";
 
 dotenv.config()
 
@@ -36,6 +37,8 @@ app.get("/",(req,res,next)=>{
     res.send("api is okay")
 })
 
+
+app.use(errorHandler);
 app.listen(process.env.PORT, ()=> {
     console.log(`api is running on port ${process.env.PORT}`);
     
