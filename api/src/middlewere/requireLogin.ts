@@ -4,5 +4,7 @@ export default function requireLogin(req: Request, res: Response, next: NextFunc
   if (!req.user) {
     next(new Error)
   }
+  console.log("im here middle");
+  
   next();
 }

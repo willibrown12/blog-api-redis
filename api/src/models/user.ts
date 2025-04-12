@@ -11,5 +11,5 @@ export type UserType = {
   });
 
 
-const userModel = mongoose.model("user", userSchema, "user"); 
+const userModel = mongoose.model("users", userSchema, "users"); 
 export { userModel };

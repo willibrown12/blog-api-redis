@@ -10,7 +10,7 @@ const blogSchema = new mongoose.Schema({
 
 
 
-const blogModel = mongoose.model("product", blogSchema, "product"); // Use consistent model name
+const blogModel = mongoose.model("blogs", blogSchema, "blogs"); // Use consistent model name
 export {blogModel };
 
 

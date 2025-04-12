@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config()
 
 
-const User = mongoose.model('User');
+const User = mongoose.model('users');
 
 passport.serializeUser((user : any, done) => {
   done(null, user.id);
@@ -21,7 +21,7 @@ passport.deserializeUser((id, done) => {
 passport.use(
     new GoogleStrategy(
       {
-        callbackURL: '/auth/google/callback',
+        callbackURL: 'http://localhost:5000/auth/google/callback',
         clientID: process.env.googleClientId as string,
         clientSecret: process.env.googleSecret as string,
         proxy: true
@@ -47,6 +47,9 @@ passport.use(
           // Pass error to done (with null for user)
           done(err, undefined); 
         }
+        
       }
     )
   );
+
+  

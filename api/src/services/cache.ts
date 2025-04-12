@@ -2,24 +2,24 @@ import mongoose  from "mongoose";
 import { createClient, RedisClientType } from "redis";
 
 const redisURL = "redis://127.0.0.1:6379";
-const client: RedisClientType = createClient({ url: redisURL });
+export const client: RedisClientType = createClient({ url: redisURL });
 
 client.on("error", (error: Error) => console.error("Redis Client Error", error));
 
 
 
-(async () => {
+export async function redisConnect()  {
     try {
       await client.connect();
       console.log("Connected to Redis successfully!");
     } catch (error) {
       console.error("Redis connection error:", error);
     }
-  })();
+  };
   
 
 
-async function cacheQuery<T>(query :  mongoose.Query<T, any>) {
+export async function cacheQuery<T>(query :  mongoose.Query<T, any>) {
 
     if (!(query instanceof mongoose.Query)) {
       throw new Error("cacheQuery must be called with a Mongoose query");
@@ -36,6 +36,8 @@ async function cacheQuery<T>(query :  mongoose.Query<T, any>) {
 
     if (cacheValue) {
         try {
+       
+          
             const doc = JSON.parse(cacheValue);
       
             return Array.isArray(doc)
@@ -50,10 +52,18 @@ async function cacheQuery<T>(query :  mongoose.Query<T, any>) {
   
     // Execute query if not cached
     const result = await query.exec();
+   
+    
     await client.hSet((query as any).model.collection.name, key, JSON.stringify(result));
     await client.expire((query as any).model.collection.name, 10);
-    // await client.set(key, JSON.stringify(result), "EX", ttl);
-  
+    
     return result;
   }
   
+
+export  function clearHash(hashKey : any){
+
+    client.del(JSON.stringify(hashKey))
+
+
+}

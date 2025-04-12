@@ -7,5 +7,5 @@ export default function errorHandler(
   next: NextFunction
 ): void {
   console.log(error.message, res.getHeader("x-request-id"));
-  res.status(500).send("Something went wrong!");
+  res.status(500).send("Something went wrong!" );
 }

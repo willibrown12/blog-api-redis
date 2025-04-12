@@ -1,10 +1,10 @@
-import { Request } from 'express';
+// src/types/express.d.ts
+import { UserType } from '../models/user';
 
 declare global {
   namespace Express {
-    interface User {
-      id?: string; // Replace 'string' with the actual type of your user ID
-     
+    interface User extends UserType {
+      id?: string; // Ensure 'id' is part of the User interface (can be virtual or _id from MongoDB)
     }
 
     interface Request {
